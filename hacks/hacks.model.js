@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const hackSchema = new mongoose.Schema({
-     category: String,
+     type: String,
      description: String,
      item: String,
      userId: String,

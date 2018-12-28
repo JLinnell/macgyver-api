@@ -2,14 +2,14 @@ const hacksModel = require('./hacks.model');
 
 exports.createNew = (req, res) => {
 
-
-    var newHack = hacksModel({
-        category: req.body.category,
-        description: req.body.description,
-        item: req.body.item,
-        userId: req.body.userId
-    });
+console.log('create a new hack');
    
+  let newHack = new hacksModel();
+  newHack.type = req.body.type; 
+  newHack.description = req.body.description; 
+  newHack.item = req.body.item; 
+  newHack.userId = req.user.id; 
+
     newHack.save()
         .then((result) => {
             res.status(200).json({
