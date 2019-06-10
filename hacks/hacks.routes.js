@@ -1,6 +1,8 @@
 const express = require('express');
 const hacksController = require('./hacks.controller');
-const middleware = require('../users/verifyToken');
+// const middleware = require('../users/verifyToken'); 6/10/2019
+const middleware = require('../users/middleware'); //6/10/2019
+
 
 let router = express.Router()
 
