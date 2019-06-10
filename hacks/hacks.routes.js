@@ -13,8 +13,8 @@ router.use((req, res, next) => {
 });
 
 router.post('/create/:token', middleware.verifyToken, hacksController.createNew);
-// router.get('/all/:token', middleware.verifyToken, hacksController.fetchAll);
-router.get('/all', hacksController.fetchAll);
+router.get('/all/:token', middleware.verifyToken, hacksController.fetchAll);
+// router.get('/all', hacksController.fetchAll);
 router.get('/one/:id', hacksController.fetchSelectedHack);
 router.get('/fetchAllByUser/:id/:token', middleware.verifyToken, hacksController.fetchAllByUser);
 router.delete('/delete/:id', hacksController.deleteSelectedHack);
