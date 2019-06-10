@@ -18,7 +18,7 @@ exports.verifyToken = (req, res, next) => {
         return;
     }
     
-         jwt.verify(token, "i love Jon's cat!!! meow!!", (error, decode) => {
+    jwt.verify(token, "i love Jon's cat!!! meow!!", (error, decode) => {
             if (error) {
                 res.status(500).json({
                     message: "Token is not valid"
