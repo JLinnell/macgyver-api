@@ -15,7 +15,7 @@ app.use('/users', usersRoutes);
 function runServer(db) {
 	return new Promise((resolve, reject) => {
 		mongoose
-			.connect(db, { useNewUrlParser: true }, (err) => {
+			.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
 				if (err) {
 					return reject(err);
         }
