@@ -29,7 +29,7 @@ function tearDownDb() {
 
 describe('tests', function () {
     before(function () {
-         return runServer('mongodb://admin:adminadmin1@ds037047.mlab.com:37047/macgyvertest');
+         return runServer('mongodb://admin:adm1nadm1n@ds037047.mlab.com:37047/macgyvertest');
     });
     after(function () {
         tearDownDb();
