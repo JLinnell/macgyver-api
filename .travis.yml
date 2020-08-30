@@ -3,7 +3,7 @@
  deploy:
   provider: heroku
   api_key:
-    secure: cb7f4792-9609-4fe4-9e13-096a6cd48712
+    secure: 25f27665-e56e-4459-b52a-1d285d94da61
   app: guarded-refuge-52889
   on:
     repo: JLinnell/macgyver-api
