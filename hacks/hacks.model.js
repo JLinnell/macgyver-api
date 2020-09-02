@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 
+// const hackSchema = new mongoose.Schema({
+//      type: String,
+//      description: String,
+//      item: String,
+//      userId: String,
+// });
+
 const hackSchema = new mongoose.Schema({
      type: String,
      description: String,
-     item: String,
-     userId: String,
+     item: String
 });
 
 
