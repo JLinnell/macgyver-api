@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --exit",
-    "start": "node server.js"
+    "start": "serve -s build",
+    "heroku-postbuild": "npm run build"
   },
   "author": "",
   "license": "ISC",
