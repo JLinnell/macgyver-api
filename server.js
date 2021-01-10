@@ -7,6 +7,11 @@ const usersRoutes = require('./users/users.routes.js');
 
 const app = express();
 
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 app.use(morgan('common'));
 app.use(bodyParser.json({urlencoded: true}));
 app.use('/hacks', hackRoutes);
@@ -15,7 +20,7 @@ app.use('/users', usersRoutes);
 function runServer(db) {
 	return new Promise((resolve, reject) => {
 		mongoose
-			.connect(db, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+			.connect(db, (err) => {
 				if (err) {
 					return reject(err);
         }
@@ -58,8 +63,13 @@ function runServer(db) {
   }  
   // if server.js is called directly (aka, with `node server.js`), this block
   // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
+  // if (require.main === module) {
+  //   runServer('mongodb://admin:adm1nadm1n@ds039778.mlab.com:39778/macgyver').catch((err) => {
+  //     console.log(err);
+  // });
+
   if (require.main === module) {
-    runServer('mongodb://admin:adm1nadm1n@ds039778.mlab.com:39778/macgyver').catch((err) => {
+    runServer('mongodb+srv://JLinnell:Contras3na1@cluster0.kruqx.mongodb.net/Macgyver?retryWrites=true&w=majority').catch((err) => {
       console.log(err);
   });
 
