@@ -20,7 +20,6 @@ console.log('create a new hack');
         .catch((err) => {
             res.status(500).json({
                 message: "Something happened!",
-                //Message shouldn't be specific, correct?
                 data: err
             })
         })
@@ -73,40 +72,6 @@ exports.deleteSelectedHack = (req, res) => {
         })
     })
 }
-
-// exports.findByCategory = (req, res) => {
-//     console.log(req.params.searchQueryText);
-//     hacksModel.find({category:  new RegExp(req.params.searchQueryText, "i")})
-//         .then((hack) => {
-//             res.status(200).json({
-//                 message: "Search query fetched successfully!",
-//                 data: hack
-//             })
-//         })
-//         .catch((err) => {
-//             res.status(500).json({
-//                 message: "Something happened!",
-//                 data: err
-//             })
-//         })
-// }
-
-// exports.findByItem = (req, res) => {
-//     console.log(req.params.searchQueryText);
-//     hacksModel.find({item:  new RegExp(req.params.searchQueryText, "i")})
-//         .then((hack) => {
-//             res.status(200).json({
-//                 message: "Search query fetched successfully!",
-//                 data: hack
-//             })
-//         })
-//         .catch((err) => {
-//             res.status(500).json({
-//                 message: "Something happened!",
-//                 data: err
-//             })
-//         })
-// }
 
 exports.fetchAllByUser = (req, res) => {
     hacksModel.find({userId: req.params.id})

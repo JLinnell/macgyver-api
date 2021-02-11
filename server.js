@@ -63,10 +63,6 @@ function runServer(db) {
   }  
   // if server.js is called directly (aka, with `node server.js`), this block
   // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
-  // if (require.main === module) {
-  //   runServer('mongodb://admin:adm1nadm1n@ds039778.mlab.com:39778/macgyver').catch((err) => {
-  //     console.log(err);
-  // });
 
   if (require.main === module) {
     runServer('mongodb+srv://JLinnell:Contras3na1@cluster0.kruqx.mongodb.net/Macgyver?retryWrites=true&w=majority').catch((err) => {
