@@ -2,74 +2,81 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const hackRoutes = require('./hacks/hacks.routes.js');
 const usersRoutes = require('./users/users.routes.js');
 
 const app = express();
 
+// 1. CORS first
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// 2. Mongoose settings
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
+// 3. Middleware
 app.use(morgan('common'));
-app.use(bodyParser.json({urlencoded: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// 4. Routes
 app.use('/hacks', hackRoutes);
 app.use('/users', usersRoutes);
 
-function runServer(db) {
-	return new Promise((resolve, reject) => {
-		mongoose
-			.connect(db, (err) => {
-				if (err) {
-					return reject(err);
-        }
-        const PORT = process.env.PORT || 1212;
-				server = app.listen(PORT, () => {
-					console.log(`Magic is happening on  ${PORT}`);
-					resolve();
-				})
-				.on('error', (err) => {
-					mongoose.disconnect();
-					reject(err);
-				})
-			})
-	})
+// Test route
+app.get("/", (req, res) => {
+  res.send("Server is alive!");
+});
+
+let server;
+
+async function runServer(dbUrl) {  // Add dbUrl parameter here
+  try {
+    await mongoose.connect(dbUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to MongoDB Atlas');
+
+    const PORT = process.env.PORT || 1212;
+    server = app.listen(PORT, () => {
+      console.log(`Magic is happening on ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    throw err;
+  }
 }
 
-
-  
-  let server;
-  
-  
-  
-  // like `runServer`, this function also needs to return a promise.
-  // `server.close` does not return a promise on its own, so we manually
-  // create one.
-  function closeServer() {
-    return mongoose
-      .disconnect()
-      .then(() => {
-        return new Promise((resolve, reject) => {
-          console.log('Closing server');
-          server.close((err) => {
-            if (err) {
-              return reject(err);
-            }
-            resolve();
-          });
+function closeServer() {
+  return mongoose
+    .disconnect()
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        console.log('Closing server');
+        server.close((err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve();
         });
       });
-  }  
-  // if server.js is called directly (aka, with `node server.js`), this block
-  // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
+    });
+}
 
-  if (require.main === module) {
-    runServer('mongodb+srv://JLinnell:Contras3na1@cluster0.kruqx.mongodb.net/Macgyver?retryWrites=true&w=majority').catch((err) => {
+if (require.main === module) {
+  runServer('mongodb+srv://JLinnell:JL@fse26@cluster0.qeoavgj.mongodb.net/?macgyver=Cluster0')
+    .catch((err) => {
       console.log(err);
-  });
+    });
+}
 
-  };
-  
-  module.exports = {app, runServer, closeServer};
-
+module.exports = {app, runServer, closeServer};
