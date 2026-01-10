@@ -10,7 +10,11 @@ const app = express();
 
 // 1. CORS first
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: [
+    'http://localhost:3001',
+    'https://macgyver-5a0a0.firebaseapp.com',
+    'https://macgyver-5a0a0.web.app'  // Firebase gives you both URLs
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -73,7 +77,8 @@ function closeServer() {
 }
 
 if (require.main === module) {
-  runServer('mongodb+srv://JLinnell:JL@fse26@cluster0.qeoavgj.mongodb.net/?macgyver=Cluster0')
+  const dbUrl = process.env.MONGODB_URI || 'mongodb+srv://JLinnell3001:JL%40fse26@cluster0.dwmxyab.mongodb.net/macgyver?retryWrites=true&w=majority';
+  runServer(dbUrl)
     .catch((err) => {
       console.log(err);
     });
