@@ -77,7 +77,7 @@ function closeServer() {
 }
 
 if (require.main === module) {
-  const dbUrl = process.env.MONGODB_URI || 'mongodb+srv://JLinnell3001:JL%40fse26@cluster0.dwmxyab.mongodb.net/macgyver?retryWrites=true&w=majority';
+  const dbUrl = process.env.MONGODB_URI || 'mongodb+srv://JLinnell3001:JL%40fse26@cluster0.qeoavgj.mongodb.net/macgyver?retryWrites=true&w=majority';
   runServer(dbUrl)
     .catch((err) => {
       console.log(err);
