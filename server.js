@@ -84,11 +84,10 @@ if (require.main === module) {
   const dbUrl = process.env.MONGODB_URI;
   
   console.log('Checking MONGODB_URI:', dbUrl ? 'Found' : 'NOT FOUND');
-  console.log('First 20 chars:', dbUrl ? dbUrl.substring(0, 20) : 'N/A');
+  console.log('Full URI:', dbUrl); // Show the complete URI
   
   if (!dbUrl) {
     console.error('MONGODB_URI environment variable is not set!');
-    console.error('Available env vars:', Object.keys(process.env).join(', '));
     process.exit(1);
   }
   
