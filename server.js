@@ -24,12 +24,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// 2. Mongoose settings
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-
 // 3. Middleware
 app.use(morgan('common'));
 app.use(bodyParser.json());
@@ -46,15 +40,13 @@ app.get("/", (req, res) => {
 
 let server;
 
-async function runServer(dbUrl) {  // Add dbUrl parameter here
+async function runServer(dbUrl) {
   try {
-    await mongoose.connect(dbUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(dbUrl);  // Remove the options object completely
+    
     console.log('Connected to MongoDB Atlas');
 
-  const PORT = process.env.PORT || 1212;
+    const PORT = process.env.PORT || 1212;
     server = app.listen(PORT, () => {
       console.log(`Magic is happening on ${PORT}`);
     });
