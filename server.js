@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -50,7 +51,7 @@ async function runServer(dbUrl) {  // Add dbUrl parameter here
     });
     console.log('Connected to MongoDB Atlas');
 
-    const PORT = process.env.PORT || 1212;
+  const PORT = process.env.PORT || 1212;
     server = app.listen(PORT, () => {
       console.log(`Magic is happening on ${PORT}`);
     });
@@ -77,11 +78,14 @@ function closeServer() {
 }
 
 if (require.main === module) {
-  const dbUrl = process.env.MONGODB_URI || 'mongodb+srv://JLinnell3001:JL%40fse26@cluster0.qeoavgj.mongodb.net/macgyver?retryWrites=true&w=majority';
-  runServer(dbUrl)
-    .catch((err) => {
-      console.log(err);
-    });
+  const dbUrl = process.env.MONGODB_URI;
+  if (!dbUrl) {
+    console.error('MONGODB_URI environment variable is not set!');
+    process.exit(1);
+  }
+  runServer(dbUrl).catch((err) => {
+    console.log(err);
+  });
 }
 
 module.exports = {app, runServer, closeServer};
