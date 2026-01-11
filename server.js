@@ -1,4 +1,7 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -79,10 +82,16 @@ function closeServer() {
 
 if (require.main === module) {
   const dbUrl = process.env.MONGODB_URI;
+  
+  console.log('Checking MONGODB_URI:', dbUrl ? 'Found' : 'NOT FOUND');
+  console.log('First 20 chars:', dbUrl ? dbUrl.substring(0, 20) : 'N/A');
+  
   if (!dbUrl) {
     console.error('MONGODB_URI environment variable is not set!');
+    console.error('Available env vars:', Object.keys(process.env).join(', '));
     process.exit(1);
   }
+  
   runServer(dbUrl).catch((err) => {
     console.log(err);
   });
